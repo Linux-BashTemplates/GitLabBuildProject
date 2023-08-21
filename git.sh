@@ -16,9 +16,9 @@ repo_base_url="https://gitlab.musicbox.local/music-box"
 # Map of project directories relative to the project_dir and their corresponding repository URLs
 declare -A directory_repository_map=(
     		  ["$project_dir/api/auth"]="$repo_base_url/back-end/auth"
-   		    ["$project_dir/api/admin"]="$repo_base_url/back-end/admin"
-   		    ["$project_dir/api/public"]="$repo_base_url/back-end/public"
-   		    ["$project_dir/consumer"]="$repo_base_url/back-end/mail"
+   		  ["$project_dir/api/admin"]="$repo_base_url/back-end/admin"
+   		  ["$project_dir/api/public"]="$repo_base_url/back-end/public"
+   		  ["$project_dir/consumer"]="$repo_base_url/back-end/mail"
     		  ["$project_dir/frontend/admin"]="$repo_base_url/front-end/admin"
     		  ["$project_dir/frontend/public"]="$repo_base_url/front-end/public"
 )
@@ -26,22 +26,22 @@ declare -A directory_repository_map=(
 #Config access to gitlab 
 function SetAccessConfig()
 {
-       local answer=""
+   local answer=""
     while true; do
         echo "Do you have an SSH access key? [y/n]"
         read -r answer 
 
-        if [[ "$answer" == "y" || "$answer" == "Y"  || "$answer" == "yes"]]; then       
+        if [[ "$answer" == "y" || "$answer" == "Y" || "$answer" == "yes" ]]; then       
             eval "$(ssh-agent -s)"
-               ssh-add ~/.ssh/id_rsa
+            ssh-add ~/.ssh/id_rsa
             break
-        elif [[ "$answer" == "n" || "$answer" == "N" || "$answer" == "no"]]; then
-                 local inbox=""
-                     echo "Entry GitLab inbox name: " 
-                        read -n $inbox
-                    ssh-keygen -t rsa -b 4096 -C $inbox
-                        eval "$(ssh-agent -s)"
-                  ssh-add ~/.ssh/id_rsa
+        elif [[ "$answer" == "n" || "$answer" == "N" || "$answer" == "no" ]]; then
+            local inbox=""
+            echo "Enter GitLab inbox name: " 
+            read -r inbox
+            ssh-keygen -t rsa -b 4096 -C "$inbox"
+            eval "$(ssh-agent -s)"
+            ssh-add ~/.ssh/id_rsa
             break
         else
             echo "Invalid input. Please enter 'y' or 'n'."
@@ -62,9 +62,7 @@ function InstallProgram()
         ssh)
             echo "Installing $program..."
              sudo apt install ssh
-             ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
              sudo systemctl enable sshd
-            
             ;;
         openvpn)
             echo "Installing $program..."
@@ -140,4 +138,5 @@ function Start()
     unset programs 
 }
 # Running
-Start
+#Start
+SetAccessConfig
