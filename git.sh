@@ -16,9 +16,9 @@ repo_base_url="https://gitlab.musicbox.local/music-box"
 # Map of project directories relative to the project_dir and their corresponding repository URLs
 declare -A directory_repository_map=(
     		  ["$project_dir/api/auth"]="$repo_base_url/back-end/auth"
-   		  ["$project_dir/api/admin"]="$repo_base_url/back-end/admin"
-   		  ["$project_dir/api/public"]="$repo_base_url/back-end/public"
-   		  ["$project_dir/consumer"]="$repo_base_url/back-end/mail"
+   		    ["$project_dir/api/admin"]="$repo_base_url/back-end/admin"
+   		    ["$project_dir/api/public"]="$repo_base_url/back-end/public"
+   		    ["$project_dir/consumer"]="$repo_base_url/back-end/mail"
     		  ["$project_dir/frontend/admin"]="$repo_base_url/front-end/admin"
     		  ["$project_dir/frontend/public"]="$repo_base_url/front-end/public"
 )
@@ -141,4 +141,3 @@ function Start()
 }
 # Running
 Start
-
