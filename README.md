@@ -24,8 +24,8 @@
   <ol>
     <li>Open a terminal.</li>
     <li>Navigate to the directory containing the script.</li>
-    <li>Run the following command to make the script executable: <code>chmod +x script.sh</code></li>
-    <li>Run the script: <code>./script.sh</code></li>
+    <li>Run the following command to make the script executable: <code>chmod +x git.sh</code></li>
+    <li>Run the script: <code>./git.sh</code></li>
     <li>Follow the on-screen prompts to configure SSH access and install required software.</li>
   </ol>
   
@@ -47,7 +47,8 @@
   
   <p><b>Step 3: Generate a New Access Key</b></p>
   <pre><code>
-ssh-keygen -t rsa -b 4096 -C "example@example.com" # Generate a new key. Add this key to GitLab afterward.
+ssh-keygen -t rsa -b 4096 -C "example@example.com" # Generate a new key.
+ P.S Add public key which called like as id_rsa.pub to GitLab afterward.
 eval "$(ssh-agent -s)" # Run ssh-agent
 ssh-add ~/.ssh/id_rsa
 </code></pre>
