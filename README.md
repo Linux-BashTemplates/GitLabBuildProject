@@ -38,7 +38,7 @@
     <li><strong>GitPullChanges:</strong> Initializes Git repositories and pulls changes from GitLab.</li>
     <li><strong>Start:</strong> Main function that orchestrates the script's execution.</li>
   </ul>
-  <h2>How to Configure SSH and Transmit with GitLab over SSH and Private Key</h2>
+  <h2>How to Configure SSH and Transmit with GitLab over SSH? </h2>
   <p><b>Step 1: Install SSH Service</b></p>
   <pre><code>sudo apt install ssh</code></pre>
   
@@ -88,7 +88,7 @@ Host gitlab.musicbox.local
   <pre><code>./git.sh</code></pre>
   <p><em>Developed by Sergey Zhyltsov</em></p>
 
-<hr> <hr>
+<hr>
 <h1>Скрипт автоматизации проекта MusicBox</h1>
 <p>Этот скрипт автоматизирует процесс создания проектов микросервисов на вашем локальном компьютере. Он включает в себя проверку и установку необходимых программ, настройку доступа SSH для GitLab, создание необходимых директорий проекта и загрузку кодовых репозиториев из GitLab.</p>
 
@@ -130,10 +130,55 @@ Host gitlab.musicbox.local
   <li><strong>Start:</strong> Основная функция, оркестрирующая выполнение скрипта.</li>
 </ul>
 
-<h2>Как настроить SSH и передавать данные через GitLab с помощью SSH и закрытого ключа</h2>
-<!-- ... Остальная информация на английском языке ... -->
+<h2>Как настроить SSH и передавать данные через GitLab с помощью SSH </h2>
+<p><b>Шаг 1: Установите SSH-сервис</b></p>
+<pre><code>sudo apt install ssh</code></pre>
 
-<h2>Запуск скрипта</h2>
-<p>Для запуска скрипта:</p>
+<p><b>Шаг 2: Включите и запустите SSH-сервис при загрузке</b></p>
+<pre><code>sudo systemctl enable sshd && sudo systemctl start sshd</code></pre>
+
+<p><b>Шаг 3: Создайте новый ключ доступа</b></p>
+<pre><code>
+ssh-keygen -t rsa -b 4096 -C "example@example.com" # Создайте новый ключ.
+ P.S Добавьте открытый ключ с именем id_rsa.pub в GitLab после этого.
+eval "$(ssh-agent -s)" # Запустите ssh-agent
+ssh-add ~/.ssh/id_rsa
+</code></pre>
+
+<p><b>Шаг 4: Используйте ssh-agent в постоянном режиме, чтобы избежать повторных запросов пароля для ключа</b></p>
+<p>Откройте файл конфигурации ~/.bashrc с помощью текстового редактора nano и добавьте следующую строку:</p>
+<pre><code>
+if [ -z "$SSH_AUTH_SOCK" ]; then
+  eval "$(ssh-agent -s)"
+  ssh-add ~/.ssh/id_rsa
+fi 
+</code></pre>
+
+<p>Сохраните изменения, нажав CTRL+O, а затем введите следующую команду, чтобы применить изменения без перезапуска сессии:</p>
+<code>
+    source ~/.bashrc    
+</code>  
+
+<p><b>Шаг 5: Редактирование конфигурации SSH</b></p>
+<p>Отредактируйте файл ssh_config, расположенный в /etc/ssh/ssh_config, используя текстовый редактор, например nano:</p>
+<pre><code>
+sudo nano /etc/ssh/ssh_config
+</code></pre>
+
+<p>Добавьте следующие строки:</p>
+<pre><code>
+Host gitlab.musicbox.local
+  PreferredAuthentications publickey
+  IdentityFile ~/.ssh/id_rsa
+</code></pre>
+
+<p><b>Шаг 6: Перезапустите SSH-сервис</b></p>
+<pre><code>sudo systemctl restart sshd</code></pre>
+
+<p><b>Шаг 7: Проверьте соединение</b></p>
+<pre><code>ssh -T git@gitlab.musicbox.local</code></pre>
+<p>Вы должны получить приветственное сообщение от GitLab.</p>
+
+<p><b>Шаг 8: Запустите ваш скрипт</b></p>
 <pre><code>./git.sh</code></pre>
-<p><em>Разработано Сергеем Жильцовым</em></p>
+<p><em>Разработано Сергеем Жилцовым</em></p>
