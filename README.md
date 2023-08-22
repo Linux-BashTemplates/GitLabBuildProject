@@ -53,14 +53,18 @@ eval "$(ssh-agent -s)" # Run ssh-agent
 ssh-add ~/.ssh/id_rsa
 </code></pre>
   
-  <p><b>Step 4: Use ssh-agent in Persistent Mode to Avoid Repeated Key Passphrase Prompts</b></p>
+ <p><b>Step 4: Use ssh-agent in Persistent Mode to Avoid Repeated Key Passphrase Prompts</b></p>
+ <p>So open the configuration script ~/.bashrc using the nano text editor and add the following line:</p>
   <pre><code>
 if [ -z "$SSH_AUTH_SOCK" ]; then
   eval "$(ssh-agent -s)"
   ssh-add ~/.ssh/id_rsa
 fi 
 </code></pre>
-  
+<p>Save the changes by pressing CTRL+O and then enter the following command to apply the changes without restarting the sessio9n:</p>
+<code>
+    source ~/.bashrc    
+</code>  
   <p><b>Step 5: Edit SSH Configuration</b></p>
   <p>Edit the ssh_config file located at /etc/ssh/ssh_config using a text editor like nano:</p>
   <pre><code>
