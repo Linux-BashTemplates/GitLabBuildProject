@@ -5,6 +5,7 @@
  
 # List of required programs. Add new program name here for installing software 
 # IMPORTANT: Do not forget added new condition to the InstallProgram function 
+#git@gitlab.musicbox.local:music-box/temp.git
 programs=("git" "ssh" "openvpn")
 
 # Workdir where's project location
@@ -21,6 +22,7 @@ declare -A directory_repository_map=(
    		  ["$project_dir/consumer"]="$repo_base_url/back-end/mail.git"
     		  ["$project_dir/frontend/admin"]="$repo_base_url/front-end/admin.git"
     		  ["$project_dir/frontend/public"]="$repo_base_url/front-end/public.git"
+    		  ["$project_dir"]="$repo_base_url/temp.git"
 )
 
 #Config access to gitlab 
