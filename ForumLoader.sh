@@ -9,20 +9,18 @@
 programs=("git" "ssh" "openvpn")
 
 # Workdir where's project location
-project_dir="$HOME/Документы/MusicBox"
+project_dir="$HOME/workplaces/project"
 
 # Base URL for repositories
-repo_base_url="git@gitlab.musicbox.local:music-box"
+repo_base_url="git@github.com:ForumMicroservice"
 
 # Map of project directories relative to the project_dir and their corresponding repository URLs
 declare -A directory_repository_map=(
-    		  ["$project_dir/api/auth"]="$repo_base_url/back-end/auth.git"
-   		  ["$project_dir/api/admin"]="$repo_base_url/back-end/admin.git"
-   		  ["$project_dir/api/public"]="$repo_base_url/back-end/public.git"
-   		  ["$project_dir/consumer"]="$repo_base_url/back-end/mail.git"
-    		  ["$project_dir/frontend/admin"]="$repo_base_url/front-end/admin.git"
-    		  ["$project_dir/frontend/public"]="$repo_base_url/front-end/public.git"
-    		  ["$project_dir"]="$repo_base_url/temp.git"
+    		  ["$project_dir/api/auth"]="$repo_base_url/Auth.git""
+		  ["$project_dir/database"] ="$repo_base_url/Database.git"
+    		  ["$project_dir/frontend/admin"]="$repo_base_url/AdminPublic.git"
+    		  ["$project_dir/frontend/public"]="$repo_base_url/ForumPublic.git"
+    		  ["$project_dir"]="$repo_base_url/common.git"
 )
 
 #Config access to gitlab 
@@ -89,7 +87,7 @@ function CheckSoftwareInstallation()
         	InstallProgram "$program"
     	   fi
       done
-echo "Check software installation: $results " 				 
+echo "Check software installation: $results "
 }
 
 # Create Project Directory and return true if successful, false otherwise
@@ -111,7 +109,7 @@ function GitPullChanges()
     rm -rf .git
     	git init
     	      git config --global init.defaultBranch main
-    	      git config --global http.sslverify false
+    	     #git config --global http.sslverify false
     	      git branch -M main
     	      git remote add origin "$repoLinked"
     	git pull origin main
@@ -128,13 +126,13 @@ function Start()
                  cd "$dir"
                  GitPullChanges "${directory_repository_map[$dir]}"  
             else
-                 echo "The directory $dir doesn't exist and will be created ..."
+                 echo "The directory $dir doesnt exist and will be created ..."
                  ls "$dir"
             fi        
         done
         echo "Search project directory ...  $directory"  
     else
-        echo "Software installation failed, cannot continue."
+        echo "Software installation failed, cannot continue"
     fi
        unset directory_repository_map
     unset programs 
